@@ -198,10 +198,14 @@ end RelativeIdeleGroup
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
-instance ideleClassGroupIsMulCommutative
+/-- The idèle class group is commutative.  Naming this witness stabilizes
+the normal-subgroup argument in the theorem statement. -/
+theorem ideleClassGroupIsMulCommutative
     (K : Type) [Field K] [NumberField K] :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance 2000] ideleClassGroupIsMulCommutative
 
 /-- Finite abelian global reciprocity in determinant norm-quotient form. -/
 theorem finiteAbelianGlobalReciprocity_relativeNormQuotient
