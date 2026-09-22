@@ -1,9 +1,10 @@
-import ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibGlobalReciprocity
 
 set_option autoImplicit false
 
 /-!
-The imported CFT module supplies
-`ClassFieldTheory.topologicalGlobalReciprocity` with exactly the Challenge
-type. The Challenge and Solution are compiled as separate modules.
+The pinned CFT module supplies the completed idèle-class norm
+`ideleClassNorm` and proves
+`ClassFieldTheory.GlobalClassFieldComparison.finiteAbelianGlobalReciprocity`
+with exactly the Challenge type.
 -/

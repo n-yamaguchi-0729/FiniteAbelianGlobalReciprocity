@@ -1,16 +1,14 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
-version: v0.4
+version: "v0.4"
 
 project:
   name: "Global class field theory in Lean 4.34.0"
   description: >-
-    For every number field K, its idèle class group modulo the identity
-    component is isomorphic as a topological group to the topological
-    abelianization of its absolute Galois group. The registered declaration
-    uses Mathlib's groups on both sides and is proved in the pinned
-    ClassFieldTheory development. Finite-level Frobenius normalization and
-    related existence and norm-kernel results in that development are
-    documented separately and are not part of the compared declaration.
+    For every finite abelian extension L/K of number fields, the idèle class
+    group C_K modulo the image of the idèle-class norm from C_L is isomorphic
+    as a topological multiplicative group to Gal(L/K). The registered
+    definition and theorem are supplied by the pinned ClassFieldTheory
+    development.
   authors: ["Naganori Yamaguchi"]
   responsible_maintainers: ["Naganori Yamaguchi"]
   license: "Apache-2.0"
@@ -30,84 +28,82 @@ sources:
     id: "https://www.jmilne.org/math/CourseNotes/CFT.pdf"
     type: book
     location: >-
-      Introduction, printed pp. 11–12 (PDF pp. 20–21); Chapter V, §5,
-      Proposition 5.2, Theorems 5.3 and 5.5, and Remark 5.7(a), printed
-      pp. 178–180 (PDF pp. 187–189)
+      Chapter V, §5, Theorem 5.3(b), printed pp. 178–179
+      (PDF pp. 187–188)
     relationship: formalizes
     note: >-
-      These passages describe the global Artin map, finite reciprocity, the
-      existence theorem, and the identity component of the idèle class group
-      as the kernel at the maximal abelian level. The compared Lean theorem
-      records the resulting topological quotient isomorphism, not the
-      normalized map or its local compatibility data.
+      The cited reciprocity law identifies C_K/N_{L/K}(C_L) with Gal(L/K)
+      for every finite abelian extension. The Lean declaration records the
+      resulting topological multiplicative equivalence as a nonempty type.
 
 related_formalizations:
   - id: "https://github.com/leanprover-community/mathlib4/tree/5ed2965256430c3649e86755f9576b54eca72435"
     relationship: builds-on
     note: >-
-      Mathlib supplies the number-field idèle class group, absolute Galois
-      group, topological abelianization, connected component, and quotient
-      vocabulary used by the Challenge.
+      Mathlib supplies number fields, adèles, local completions, quotient
+      groups, topological groups, field automorphisms, and finite abelian
+      Galois extensions used by the Challenge and substantive proof.
 
 status:
   scope: >-
-    The selected result is exactly
-    ClassFieldTheory.topologicalGlobalReciprocity for number fields. It gives
-    a nonempty continuous multiplicative equivalence with continuous inverse
-    between C_K/C_K⁰ and G_K^ab. It does not itself name a canonical global
-    Artin map, assert finite-prime Frobenius normalization or local-global
-    compatibility, or treat global function fields. The pinned substantive
-    repository proves related maximal-abelian, finite-level, norm-kernel, and
-    ray-class existence results listed in the README.
+    The selected theorem is
+    ClassFieldTheory.GlobalClassFieldComparison.finiteAbelianGlobalReciprocity.
+    It covers finite abelian extensions of number fields and identifies the
+    idèle-class norm quotient with the relative Galois group as a topological
+    multiplicative group. Nonempty records existence of an equivalence rather
+    than choosing the normalized Artin map. Frobenius normalization and local
+    compatibility are separate proved declarations listed in the README.
+    Global function fields are not included.
   sorry_count: 0
   sorry_in_definitions: 0
+  axioms: []
 
 automation:
   methods:
     - method: agent
-      models: ["GPT-6 Astra"]
+      models: ["Astra GPT-6 Codex"]
       framework: "Codex"
       tool_setup: >-
         AI-assisted Lean development and maintenance of the underlying CFT
-        library, followed by source-level statement review and thin-wrapper
-        preparation. Human authorship and responsibility remain with the
-        named maintainer.
-  notes: >-
-    Historical prompts, usage shares, costs, and hardware were not retained
-    and are not reconstructed. The wrapper introduces no new proof: its
-    Solution imports the existing declaration at the pinned CFT commit.
-
+        library, followed by statement review and preparation of this thin
+        submission interface. Human authorship and responsibility remain with
+        the named maintainer.
 fidelity:
   divergences: >-
-    The cited account includes a canonical Artin map and compatibility with
-    local reciprocity. The compared declaration retains only existence of the
-    resulting topological group equivalence. It is restricted to number
-    fields and makes no claim for global function fields. The README identifies
-    stronger and complementary declarations already proved in CFT.
+    Milne states the result through the canonical global Artin map. The
+    compared theorem retains the induced topological norm-quotient
+    equivalence but, by using Nonempty, does not select that map or include
+    its arithmetic Frobenius normalization. The development is restricted to
+    number fields.
 
 review:
   status: "agent-reviewed"
   reviewers: ["Codex"]
   notes: >-
-    The Challenge definition, instance, and theorem type were compared with
-    the pinned substantive source, and the statement was checked against the
-    cited mathematical reference. Mechanical Comparator and NanoDa
-    verification is performed separately by Palomar for the submitted
-    immutable commit.
+    The theorem type and the idèle-class norm type were compared with the
+    pinned substantive source, and the mathematical statement was checked
+    against Milne's reciprocity law.
 
 alignment:
-  namespace: "ClassFieldTheory"
+  namespace: "ClassFieldTheory.GlobalClassFieldComparison"
   statements:
     - source: >-
-        J. S. Milne, Class Field Theory, Introduction, printed pp. 11–12;
-        Chapter V, §5, printed pp. 178–180
-      lean: "ClassFieldTheory.topologicalGlobalReciprocity"
-      module: "ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity"
+        J. S. Milne, Class Field Theory, Chapter V, §5, Theorem 5.3(b)
+      lean: "ideleClassNorm"
+      module: "ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm"
+      status: "definition supplied by the pinned substantive repository"
+      note: >-
+        Comparator replaces the deliberate Challenge definition hole with
+        the determinant norm on relative idèles, transported to ordinary
+        idèles and descended to idèle classes.
+    - source: >-
+        J. S. Milne, Class Field Theory, Chapter V, §5, Theorem 5.3(b)
+      lean: "ClassFieldTheory.GlobalClassFieldComparison.finiteAbelianGlobalReciprocity"
+      module: "ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibGlobalReciprocity"
       status: "proved in the pinned substantive repository"
       note: >-
-        The Challenge copies the exact quotient definition, normality
-        instance, and theorem type but replaces only the proof with the
-        deliberate Comparator placeholder.
+        The Challenge copies the exact theorem type and replaces only its
+        proof with the deliberate Comparator placeholder.
 
 acknowledgements: >-
   This development builds on Lean and Mathlib. Naganori Yamaguchi is the
