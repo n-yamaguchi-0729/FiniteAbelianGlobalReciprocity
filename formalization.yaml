@@ -1,0 +1,114 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: v0.4
+
+project:
+  name: "Topological global class field theory for number fields in Lean 4.34.0"
+  description: >-
+    For every number field K, its idèle class group modulo the identity
+    component is isomorphic as a topological group to the topological
+    abelianization of its absolute Galois group. The registered declaration
+    uses Mathlib's groups on both sides and is proved in the pinned
+    ClassFieldTheory development. Finite-level Frobenius normalization and
+    related existence and norm-kernel results in that development are
+    documented separately and are not part of the compared declaration.
+  authors: ["Naganori Yamaguchi"]
+  responsible_maintainers: ["Naganori Yamaguchi"]
+  license: "Apache-2.0"
+
+repository:
+  substantive_formalization:
+    id: "n-yamaguchi-0729/ClassFieldTheory"
+    revision: "01b4614ee76fa6f50e7f3ea3e1cff93b85693345"
+
+classification:
+  arxiv: ["math.NT"]
+  msc2020: ["11R37"]
+
+sources:
+  - title: "Class Field Theory (version 4.03)"
+    authors: ["J. S. Milne"]
+    id: "https://www.jmilne.org/math/CourseNotes/CFT.pdf"
+    type: book
+    location: >-
+      Introduction, printed pp. 11–12 (PDF pp. 20–21); Chapter V, §5,
+      Proposition 5.2, Theorems 5.3 and 5.5, and Remark 5.7(a), printed
+      pp. 178–180 (PDF pp. 187–189)
+    relationship: formalizes
+    note: >-
+      These passages describe the global Artin map, finite reciprocity, the
+      existence theorem, and the identity component of the idèle class group
+      as the kernel at the maximal abelian level. The compared Lean theorem
+      records the resulting topological quotient isomorphism, not the
+      normalized map or its local compatibility data.
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/tree/5ed2965256430c3649e86755f9576b54eca72435"
+    relationship: builds-on
+    note: >-
+      Mathlib supplies the number-field idèle class group, absolute Galois
+      group, topological abelianization, connected component, and quotient
+      vocabulary used by the Challenge.
+
+status:
+  scope: >-
+    The selected result is exactly
+    ClassFieldTheory.topologicalGlobalReciprocity for number fields. It gives
+    a nonempty continuous multiplicative equivalence with continuous inverse
+    between C_K/C_K⁰ and G_K^ab. It does not itself name a canonical global
+    Artin map, assert finite-prime Frobenius normalization or local-global
+    compatibility, or treat global function fields. The pinned substantive
+    repository proves related maximal-abelian, finite-level, norm-kernel, and
+    ray-class existence results listed in the README.
+  sorry_count: 0
+  sorry_in_definitions: 0
+
+automation:
+  methods:
+    - method: agent
+      models: ["GPT-6 Astra"]
+      framework: "Codex"
+      tool_setup: >-
+        AI-assisted Lean development and maintenance of the underlying CFT
+        library, followed by source-level statement review and thin-wrapper
+        preparation. Human authorship and responsibility remain with the
+        named maintainer.
+  notes: >-
+    Historical prompts, usage shares, costs, and hardware were not retained
+    and are not reconstructed. The wrapper introduces no new proof: its
+    Solution imports the existing declaration at the pinned CFT commit.
+
+fidelity:
+  divergences: >-
+    The cited account includes a canonical Artin map and compatibility with
+    local reciprocity. The compared declaration retains only existence of the
+    resulting topological group equivalence. It is restricted to number
+    fields and makes no claim for global function fields. The README identifies
+    stronger and complementary declarations already proved in CFT.
+
+review:
+  status: "agent-reviewed"
+  reviewers: ["Codex"]
+  notes: >-
+    The Challenge definition, instance, and theorem type were compared with
+    the pinned substantive source, and the statement was checked against the
+    cited mathematical reference. Mechanical Comparator and NanoDa
+    verification is performed separately by Palomar for the submitted
+    immutable commit.
+
+alignment:
+  namespace: "ClassFieldTheory"
+  statements:
+    - source: >-
+        J. S. Milne, Class Field Theory, Introduction, printed pp. 11–12;
+        Chapter V, §5, printed pp. 178–180
+      lean: "ClassFieldTheory.topologicalGlobalReciprocity"
+      module: "ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity"
+      status: "proved in the pinned substantive repository"
+      note: >-
+        The Challenge copies the exact quotient definition, normality
+        instance, and theorem type but replaces only the proof with the
+        deliberate Comparator placeholder.
+
+acknowledgements: >-
+  This development builds on Lean and Mathlib. Naganori Yamaguchi is the
+  human author and responsible maintainer.

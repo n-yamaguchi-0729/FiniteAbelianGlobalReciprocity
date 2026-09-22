@@ -1,0 +1,16 @@
+name = "TopologicalGlobalReciprocity"
+version = "0.1.0"
+defaultTargets = ["Challenge", "Solution"]
+
+[[require]]
+name = "ClassFieldTheory"
+git = "https://github.com/n-yamaguchi-0729/ClassFieldTheory.git"
+rev = "01b4614ee76fa6f50e7f3ea3e1cff93b85693345"
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]
