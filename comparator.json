@@ -2,11 +2,9 @@
   "challenge_module": "Challenge",
   "solution_module": "Solution",
   "theorem_names": [
-    "ClassFieldTheory.GlobalClassFieldComparison.finiteAbelianGlobalReciprocity"
+    "ClassFieldTheory.GlobalClassFieldComparison.finiteAbelianGlobalReciprocity_relativeNormQuotient"
   ],
-  "definition_names": [
-    "ideleClassNorm"
-  ],
+  "definition_names": [],
   "permitted_axioms": [
     "propext",
     "Quot.sound",

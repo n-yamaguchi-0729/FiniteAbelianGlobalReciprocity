@@ -2,6 +2,10 @@ import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.FieldTheory.Galois.Abelian
+import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.LinearAlgebra.TensorProduct.Basis
+import Mathlib.RingTheory.Norm.Basic
+import Mathlib.RingTheory.TensorProduct.Maps
 
 set_option autoImplicit false
 
@@ -13,12 +17,12 @@ group of `K`, modulo norms from the idèle class group of `L`, is isomorphic
 as a topological multiplicative group to `Gal(L / K)`.
 
 The idèle and idèle-class definitions below reproduce the statement surface
-of the substantive development using only Mathlib. The idèle-class norm is a
-Comparator definition target: its completed construction is supplied by
-`Solution.lean` from the pinned ClassFieldTheory repository.
+of the substantive development using only Mathlib. The norm is defined here,
+not supplied by the solution: it is the determinant norm on the canonical
+relative adèle algebra, descended through principal idèles.
 -/
 
-open scoped NumberField RestrictedProduct
+open scoped NumberField RestrictedProduct TensorProduct
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -88,18 +92,109 @@ end IdeleGroup
 abbrev IdeleClassGroup :=
   IdeleGroup K ⧸ IdeleGroup.principalSubgroup K
 
-universe u v
+variable
+    (K L : Type*) [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L]
+    [FiniteDimensional K L]
 
-/-- The idèle-class norm `N_{L/K} : C_L → C_K`.
+/-- The adèle algebra of `L` in its canonical relative presentation
+`𝔸_K ⊗_K L`. -/
+abbrev RelativeAdeleRing :=
+  NumberField.AdeleRing (𝓞 K) K ⊗[K] L
 
-The Solution supplies its value: the determinant norm on relative idèles,
-transported to ordinary idèles and descended through principal idèles. -/
-noncomputable def ideleClassNorm
-    (K : Type u) (L : Type v)
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L] :
-    IdeleClassGroup L →* IdeleClassGroup K := by
-  sorry
+/-- The idèle group of the relative adèle algebra. -/
+abbrev RelativeIdeleGroup :=
+  (RelativeAdeleRing K L)ˣ
+
+namespace RelativeIdeleGroup
+
+instance baseAdeleRingNontrivial :
+    Nontrivial (NumberField.AdeleRing (𝓞 K) K) :=
+  Function.Injective.nontrivial
+    (NumberField.AdeleRing.algebraMap_injective
+      (R := 𝓞 K) (K := K))
+
+/-- The extension field embedded diagonally in the relative adèle algebra. -/
+def fieldInclusion :
+    L →+* RelativeAdeleRing K L :=
+  (Algebra.TensorProduct.includeRight
+    (R := K) (A := NumberField.AdeleRing (𝓞 K) K)
+    (B := L)).toRingHom
+
+/-- The diagonal embedding of `Lˣ` into the relative idèle group. -/
+def principalIdele :
+    Lˣ →* RelativeIdeleGroup K L :=
+  Units.map (fieldInclusion K L)
+
+/-- The relative idèle norm, defined as the determinant over `𝔸_K`. -/
+def norm :
+    RelativeIdeleGroup K L →* IdeleGroup K :=
+  (IdeleGroup.equivAdeleRingUnits (K := K)).symm.toMonoidHom.comp
+    (Units.map
+      (Algebra.norm
+        (NumberField.AdeleRing (𝓞 K) K)))
+
+omit [NumberField L] in
+/-- The determinant norm of a diagonal element is its field norm. -/
+theorem norm_fieldInclusion (x : L) :
+    Algebra.norm (NumberField.AdeleRing (𝓞 K) K)
+        (fieldInclusion K L x) =
+      algebraMap K (NumberField.AdeleRing (𝓞 K) K)
+        (Algebra.norm K x) := by
+  classical
+  let b := Module.Free.chooseBasis K L
+  let bA := b.baseChange
+    (NumberField.AdeleRing (𝓞 K) K)
+  rw [Algebra.norm_eq_matrix_det bA,
+    Algebra.norm_eq_matrix_det b,
+    (algebraMap K
+      (NumberField.AdeleRing (𝓞 K) K)).map_det]
+  congr 1
+  ext i j
+  simp [bA, b, fieldInclusion,
+    Algebra.smul_def,
+    Algebra.leftMulMatrix_eq_repr_mul,
+    Algebra.TensorProduct.tmul_mul_tmul]
+
+omit [NumberField L] in
+/-- The relative idèle norm sends principal idèles to principal idèles. -/
+@[simp]
+theorem norm_principalIdele (x : Lˣ) :
+    norm K L (principalIdele K L x) =
+      IdeleGroup.principalIdele K
+        (Units.map (Algebra.norm K) x) := by
+  apply (IdeleGroup.equivAdeleRingUnits (K := K)).injective
+  apply Units.ext
+  change
+    Algebra.norm (NumberField.AdeleRing (𝓞 K) K)
+        (fieldInclusion K L (x : L)) =
+      algebraMap K (NumberField.AdeleRing (𝓞 K) K)
+        (Algebra.norm K (x : L))
+  exact norm_fieldInclusion K L (x : L)
+
+/-- The subgroup of principal relative idèles. -/
+def principalSubgroup :
+    Subgroup (RelativeIdeleGroup K L) :=
+  (principalIdele K L).range
+
+/-- The idèle class group of `L` in the relative presentation
+`(𝔸_K ⊗_K L)ˣ / Lˣ`. -/
+abbrev ClassGroup :=
+  RelativeIdeleGroup K L ⧸ principalSubgroup K L
+
+/-- The determinant norm descended to relative idèle classes. -/
+noncomputable def classNorm :
+    ClassGroup K L →* IdeleClassGroup K :=
+  QuotientGroup.map
+    (principalSubgroup K L)
+    (IdeleGroup.principalSubgroup K)
+    (norm K L)
+    (by
+      rintro _ ⟨x, rfl⟩
+      refine ⟨Units.map (Algebra.norm K) x, ?_⟩
+      exact (norm_principalIdele K L x).symm)
+
+end RelativeIdeleGroup
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
@@ -108,14 +203,14 @@ private instance ideleClassGroupIsMulCommutative
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
-/-- Finite abelian global reciprocity in idèle-class norm-quotient form. -/
-theorem finiteAbelianGlobalReciprocity
+/-- Finite abelian global reciprocity in determinant norm-quotient form. -/
+theorem finiteAbelianGlobalReciprocity_relativeNormQuotient
     (K L : Type)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L] :
     Nonempty
-      ((IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range) ≃ₜ*
+      ((IdeleClassGroup K ⧸ (RelativeIdeleGroup.classNorm K L).range) ≃ₜ*
         (L ≃ₐ[K] L)) := by
   sorry
 
