@@ -21,10 +21,6 @@ pinned CFT commit.
 ## Scope and the rest of the CFT development
 
 This entry records the standard compact maximal-abelian topological theorem.
-The `Nonempty` equivalence asserts existence of a topological group
-isomorphism, but does not itself select a globally normalized Artin map or
-state its values on finite-prime Frobenius elements. It covers number fields,
-not global function fields.
 
 The substantive CFT library separately proves:
 
@@ -40,9 +36,6 @@ The substantive CFT library separately proves:
 - ray-class existence results under
   [`Theorems/ConductorsAndRayClassFields`](https://github.com/n-yamaguchi-0729/ClassFieldTheory/tree/01b4614ee76fa6f50e7f3ea3e1cff93b85693345/Lean4/ClassFieldTheory/Theorems/ConductorsAndRayClassFields).
 
-Those results explain the scope of the underlying library; this Comparator
-configuration selects only the displayed topological theorem.
-
 ## Files and verification
 
 - `Challenge.lean`: the short Mathlib-only statement surface; its one `sorry`
@@ -56,9 +49,12 @@ builds `Challenge` and `Solution` together with their transitive import
 closures; it does not rerun the whole CFT library. Locally, run
 `lake exe cache get`, `lake build Challenge`, and
 `lake --no-ansi --wfail build Solution`. The Challenge build has one expected
-warning for its deliberate statement placeholder. Palomar independently runs
-Comparator, Lean kernel checking, and NanoDa replay for a submitted immutable
-commit.
+warning for its deliberate statement placeholder.
 
-Licensed under Apache-2.0. The human author and responsible maintainer is
-Naganori Yamaguchi (山口永悟).
+## Authorship and AI assistance
+
+GPT-6 Astra, via Codex, assisted with Lean development, statement review, and
+preparation of this submission interface. Naganori Yamaguchi (山口永悟) is the
+human author and responsible maintainer.
+
+Licensed under Apache-2.0.
