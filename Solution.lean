@@ -1,3 +1,4 @@
+import Definitions
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibGlobalReciprocity
 
@@ -13,24 +14,19 @@ noncomputable section
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
-/-- The idèle class group is commutative.  Naming this witness stabilizes
-the normal-subgroup argument in the theorem statement. -/
-theorem ideleClassGroupIsMulCommutative
-    (K : Type) [Field K] [NumberField K] :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance 2000] ideleClassGroupIsMulCommutative
-
 /-- Finite abelian global reciprocity in determinant norm-quotient form. -/
 theorem finiteAbelianGlobalReciprocity_relativeNormQuotient
     (K L : Type)
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L]
-    [FiniteDimensional K L] [IsAbelianGalois K L] :
+    [fieldK : Field K] [numberFieldK : NumberField K]
+    [fieldL : Field L] [numberFieldL : NumberField L]
+    [algebraKL : Algebra K L]
+    [finiteDimensionalKL : FiniteDimensional K L]
+    [abelianGaloisKL : IsAbelianGalois K L] :
+    FiniteAbelianGlobalReciprocity.Statement K L := by
+  change
     Nonempty
       ((IdeleClassGroup K ⧸ (RelativeIdeleGroup.classNorm K L).range) ≃ₜ*
-        (L ≃ₐ[K] L)) := by
+        (L ≃ₐ[K] L))
   rw [← ordinaryIdeleClassNorm_range_eq_relative (K := K) (L := L)]
   exact finiteAbelianGlobalReciprocity K L
 

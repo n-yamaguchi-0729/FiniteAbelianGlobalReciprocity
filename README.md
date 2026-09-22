@@ -50,17 +50,16 @@ and the range comparison above.
 - `Challenge.lean`: the Mathlib-only statement surface, including the actual
   determinant norm; its one theorem `sorry` is the deliberate Comparator
   placeholder.
+- `Definitions.lean`: the identical definition block used by `Solution`; it is
+  kept outside the Challenge import closure required by Palomar.
 - `Solution.lean`: proves the selected theorem from the exact pinned CFT
   commit's global reciprocity and norm-comparison results.
 - `comparator.json`: selects exactly one theorem and no definition holes.
 - `formalization.yaml`: provenance, scope, source, and automation metadata.
 
-The project uses Lean 4.34.0 and commits an exact dependency manifest. CI is
-configured to build `Challenge` and `Solution` and run Palomar's full
-mechanical preflight at a pinned revision. The preflight verifies the
-Challenge's transitive import closure against the permitted canonical
-dependencies, checks the selected Solution declarations with Comparator, and
-replays the exported proofs with Lean's kernel and NanoDa.
+The project uses Lean 4.34.0 and commits an exact dependency manifest. CI
+builds all three Lean modules and runs the pinned full preflight: provenance,
+Comparator, Lean-kernel replay, and NanoDa replay.
 
 ## Authorship and AI assistance
 

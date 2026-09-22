@@ -221,17 +221,3 @@ def Statement
       (L ≃ₐ[K] L))
 
 end FiniteAbelianGlobalReciprocity
-namespace ClassFieldTheory.GlobalClassFieldComparison
-
-/-- Finite abelian global reciprocity in determinant norm-quotient form. -/
-theorem finiteAbelianGlobalReciprocity_relativeNormQuotient
-    (K L : Type)
-    [fieldK : Field K] [numberFieldK : NumberField K]
-    [fieldL : Field L] [numberFieldL : NumberField L]
-    [algebraKL : Algebra K L]
-    [finiteDimensionalKL : FiniteDimensional K L]
-    [abelianGaloisKL : IsAbelianGalois K L] :
-    FiniteAbelianGlobalReciprocity.Statement K L := by
-  sorry
-
-end ClassFieldTheory.GlobalClassFieldComparison

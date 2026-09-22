@@ -93,12 +93,14 @@ alignment:
   statements:
     - source: >-
         J. S. Milne, Class Field Theory, Chapter V, §5, Theorem 5.3(b)
-      lean: "RelativeIdeleGroup.classNorm"
-      module: "ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup"
-      status: "defined in the Challenge and the pinned substantive repository"
+      lean: "FiniteAbelianGlobalReciprocity.RelativeIdeleGroup.classNorm"
+      module: "Challenge"
+      status: "defined concretely in the Challenge"
       note: >-
         The Challenge explicitly defines the determinant norm on relative
-        idèles and descends it through principal idèles. There is no
+        idèles and descends it through principal idèles. Solution imports an
+        identical definition block before the pinned substantive library, so
+        Comparator checks the resulting dependency closure. There is no
         Comparator definition hole.
     - source: >-
         J. S. Milne, Class Field Theory, Chapter V, §5, Theorem 5.3(b)

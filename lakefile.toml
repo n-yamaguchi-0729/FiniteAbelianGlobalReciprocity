@@ -1,11 +1,15 @@
 name = "FiniteAbelianGlobalReciprocity"
 version = "0.1.0"
-defaultTargets = ["Challenge", "Solution"]
+defaultTargets = ["Definitions", "Challenge", "Solution"]
 
 [[require]]
 name = "ClassFieldTheory"
 git = "https://github.com/n-yamaguchi-0729/ClassFieldTheory.git"
 rev = "01b4614ee76fa6f50e7f3ea3e1cff93b85693345"
+
+[[lean_lib]]
+name = "Definitions"
+roots = ["Definitions"]
 
 [[lean_lib]]
 name = "Challenge"

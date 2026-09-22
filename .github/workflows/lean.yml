@@ -30,6 +30,8 @@ jobs:
           lint: "false"
           use-mathlib-cache: "true"
           use-github-cache: "false"
+      - name: Build shared definitions
+        run: lake --no-ansi --wfail build Definitions
       - name: Build statement
         run: lake --no-ansi build Challenge
       - name: Build proved declaration
