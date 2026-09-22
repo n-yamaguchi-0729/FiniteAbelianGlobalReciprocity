@@ -1,4 +1,4 @@
-# Topological global class field theory for number fields in Lean 4.34.0
+# Global class field theory in Lean 4.34.0
 
 This repository is a thin submission interface for the topological form of
 global class field theory proved in

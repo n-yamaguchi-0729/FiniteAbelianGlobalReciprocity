@@ -2,7 +2,7 @@
 version: v0.4
 
 project:
-  name: "Topological global class field theory for number fields in Lean 4.34.0"
+  name: "Global class field theory in Lean 4.34.0"
   description: >-
     For every number field K, its idèle class group modulo the identity
     component is isomorphic as a topological group to the topological
