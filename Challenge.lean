@@ -198,7 +198,7 @@ end RelativeIdeleGroup
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
-private instance ideleClassGroupIsMulCommutative
+instance ideleClassGroupIsMulCommutative
     (K : Type) [Field K] [NumberField K] :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
