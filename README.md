@@ -19,6 +19,8 @@ corresponding ordinary idèle-class norm is defined in
 [`IdeleNorm.lean`](https://github.com/n-yamaguchi-0729/ClassFieldTheory/blob/01b4614ee76fa6f50e7f3ea3e1cff93b85693345/Lean4/ClassFieldTheory/AlgebraicNumberTheory/Idele/Extension/IdeleNorm.lean),
 and its range is identified with the relative determinant norm's range in
 [`NormComparison.lean`](https://github.com/n-yamaguchi-0729/ClassFieldTheory/blob/01b4614ee76fa6f50e7f3ea3e1cff93b85693345/Lean4/ClassFieldTheory/AlgebraicNumberTheory/Idele/ClassGroup/NormComparison.lean).
+The Solution uses this comparison and the ordinary-norm theorem in
+[`MathlibGlobalReciprocity.lean`](https://github.com/n-yamaguchi-0729/ClassFieldTheory/blob/01b4614ee76fa6f50e7f3ea3e1cff93b85693345/Lean4/ClassFieldTheory/GlobalClassFieldTheory/GlobalClassFields/MathlibGlobalReciprocity.lean).
 
 ## Additional proved results
 
@@ -34,17 +36,10 @@ The same CFT development also proves:
   and
   [`FinitePlaceRayArtinDecomposition.lean`](https://github.com/n-yamaguchi-0729/ClassFieldTheory/blob/01b4614ee76fa6f50e7f3ea3e1cff93b85693345/Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/FinitePlaceRayArtinDecomposition.lean).
 
-`Solution.lean` derives the compared relative-norm quotient theorem from the
-ordinary-norm theorem in
-[`MathlibGlobalReciprocity.lean`](https://github.com/n-yamaguchi-0729/ClassFieldTheory/blob/01b4614ee76fa6f50e7f3ea3e1cff93b85693345/Lean4/ClassFieldTheory/GlobalClassFieldTheory/GlobalClassFields/MathlibGlobalReciprocity.lean)
-and the range comparison above.
+The theorem placeholder in `Challenge.lean` is deliberate; `Solution.lean`
+contains the completed proof, and the norm has no definition hole.
 
-## Verification and authorship
-
-The project uses Lean 4.34.0. CI builds the definitions, Challenge, and
-Solution and checks the selected proof with Comparator, Lean's kernel, and
-NanoDa. The theorem placeholder in the Challenge is deliberate; the Solution
-is complete and the norm has no definition hole.
+## Authorship
 
 Astra GPT-6 Codex assisted with Lean development, statement review, and
 preparation of this submission interface. Naganori Yamaguchi (山口永悟) is the
